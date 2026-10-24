@@ -1,0 +1,4 @@
+model,r2_total_waste_kg_day,rmse_total_waste_kg_day,morans_i_total_waste_kg_day,r2_biodegradable_pct,rmse_biodegradable_pct,morans_i_biodegradable_pct,r2_recyclable_pct,rmse_recyclable_pct,morans_i_recyclable_pct,avg_r2
+RandomForest,0.7519,305.6199951171875,0.0065,0.1321,4.070000171661377,0.0013,0.3636,3.0299999713897705,0.0004,0.4159
+XGBoost,0.76,300.57000732421875,0.0046,0.1367,4.059999942779541,0.0003,0.3664,3.0199999809265137,-0.0,0.421
+GWR_Benchmark,0.7548,301.31,0.0007,N/A,N/A,N/A,N/A,N/A,N/A,0.7548

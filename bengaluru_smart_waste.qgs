@@ -1,0 +1,592 @@
+<!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
+<qgis projectname="Bengaluru Smart Waste Geospatial Intelligence &amp; Route Optimization" version="3.28.0">
+  <title>Bengaluru Smart Waste — Geospatial Intelligence &amp; Route Optimization</title>
+  <projectCrs>
+    <spatialrefsys nativeFormat="Wkt">
+      <wkt>GEOGCRS["WGS 84",DATUM["World Geodetic System 1984",ELLIPSOID["WGS 84",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433],ID["EPSG",4326]]</wkt>
+      <proj4>+proj=longlat +datum=WGS84 +no_defs</proj4>
+      <srsid>3452</srsid><srid>4326</srid>
+      <authid>EPSG:4326</authid>
+      <description>WGS 84</description>
+      <projectionacronym>longlat</projectionacronym>
+      <ellipsoidacronym>EPSG:7030</ellipsoidacronym>
+      <geographicflag>true</geographicflag>
+    </spatialrefsys>
+  </projectCrs>
+
+  <mapcanvas name="theMapCanvas" annotationsVisible="1">
+    <units>degrees</units>
+    <extent>
+      <xmin>77.45</xmin><ymin>12.85</ymin>
+      <xmax>77.78</xmax><ymax>13.12</ymax>
+    </extent>
+    <rotation>0</rotation>
+    <destinationsrs>
+      <spatialrefsys nativeFormat="Wkt">
+        <authid>EPSG:4326</authid>
+        <description>WGS 84</description>
+      </spatialrefsys>
+    </destinationsrs>
+    <rendermaptile>0</rendermaptile>
+  </mapcanvas>
+
+  <layer-tree-group>
+    <custom-order enabled="0"/>
+    <customproperties/>
+
+    <!-- GROUP 1: Prescriptive Operations -->
+    <layer-tree-group name="1. Prescriptive Operations (Routing &amp; Bins)" checked="Qt::Checked" expanded="1">
+      <custom-order enabled="0"/>
+      <layer-tree-layer id="optimized_routes_layer" name="01. VRP Optimized Collection Routes" source="C:/clg/9thsem/projects/Spatial/data/processed/optimized_routes.gpkg|layername=optimized_routes" providerKey="ogr" checked="Qt::Checked" expanded="1"/>
+      <layer-tree-layer id="bin_sites_layer" name="02. Priority Smart Bin Sites (Top 15%)" source="C:/clg/9thsem/projects/Spatial/data/processed/bin_sites.gpkg|layername=bin_sites" providerKey="ogr" checked="Qt::Unchecked" expanded="1"/>
+    </layer-tree-group>
+
+    <!-- GROUP 2: Geo-XAI & Hotspots -->
+    <layer-tree-group name="2. Spatial Explainable AI (Geo-SHAP) &amp; Hotspots" checked="Qt::Checked" expanded="1">
+      <custom-order enabled="0"/>
+      <layer-tree-layer id="hotspots_layer" name="03. Getis-Ord Gi* Waste Hotspots" source="C:/clg/9thsem/projects/Spatial/data/processed/final_predictions_with_shap.gpkg|layername=final_predictions_with_shap" providerKey="ogr" checked="Qt::Checked" expanded="1"/>
+      <layer-tree-layer id="shap_drivers_layer" name="04. Geo-SHAP Dominant Feature Drivers" source="C:/clg/9thsem/projects/Spatial/data/processed/final_predictions_with_shap.gpkg|layername=final_predictions_with_shap" providerKey="ogr" checked="Qt::Unchecked" expanded="1"/>
+    </layer-tree-group>
+
+    <!-- GROUP 3: Predictions & Carbon -->
+    <layer-tree-group name="3. ML Predictions &amp; Carbon Impact" checked="Qt::Unchecked" expanded="0">
+      <custom-order enabled="0"/>
+      <layer-tree-layer id="pred_waste_layer" name="05. Predicted Total Waste (kg/day)" source="C:/clg/9thsem/projects/Spatial/data/processed/final_predictions_with_shap.gpkg|layername=final_predictions_with_shap" providerKey="ogr" checked="Qt::Unchecked" expanded="0"/>
+      <layer-tree-layer id="carbon_impact_layer" name="06. IPCC GHG — Methane &amp; CO2e (kg/yr)" source="C:/clg/9thsem/projects/Spatial/data/processed/carbon_impact.gpkg|layername=carbon_impact" providerKey="ogr" checked="Qt::Unchecked" expanded="0"/>
+    </layer-tree-group>
+
+    <!-- GROUP 4: Administrative Boundaries & Context -->
+    <layer-tree-group name="4. Administrative Boundaries &amp; Base Maps" checked="Qt::Checked" expanded="1">
+      <custom-order enabled="0"/>
+      <layer-tree-layer id="wards_layer" name="07. Bengaluru BBMP Ward Boundaries (243 Wards)" source="C:/clg/9thsem/projects/Spatial/data/raw/bengaluru_wards.geojson" providerKey="ogr" checked="Qt::Checked" expanded="0"/>
+      <layer-tree-layer id="karnataka_layer" name="08. Karnataka State District Boundaries" source="C:/clg/9thsem/projects/Spatial/data/raw/karnataka_districts.geojson" providerKey="ogr" checked="Qt::Unchecked" expanded="0"/>
+      <layer-tree-layer id="hex_grid_layer" name="09. Hexagonal Analysis Grid (250m)" source="C:/clg/9thsem/projects/Spatial/data/processed/hex_grid_250m.gpkg|layername=hex_grid_250m" providerKey="ogr" checked="Qt::Unchecked" expanded="0"/>
+      <layer-tree-layer id="esri_dark_layer" name="10. Esri Dark Canvas Basemap (Recommended)" source="type=xyz&amp;url=https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}&amp;zmax=16&amp;zmin=0" providerKey="wms" checked="Qt::Checked" expanded="0"/>
+      <layer-tree-layer id="esri_sat_layer" name="11. Esri World Imagery Satellite (Optional)" source="type=xyz&amp;url=https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}&amp;zmax=19&amp;zmin=0" providerKey="wms" checked="Qt::Unchecked" expanded="0"/>
+      <layer-tree-layer id="osm_tiles_layer" name="12. OpenStreetMap Standard Basemap" source="type=xyz&amp;url=https://tile.openstreetmap.org/{z}/{x}/{y}.png&amp;zmax=19&amp;zmin=0" providerKey="wms" checked="Qt::Unchecked" expanded="0"/>
+      <layer-tree-layer id="lst_layer" name="13. Landsat-9 Land Surface Temperature (°C)" source="C:/clg/9thsem/projects/Spatial/data/raw/landsat_lst/lst_celsius.tif" providerKey="gdal" checked="Qt::Unchecked" expanded="0"/>
+      <layer-tree-layer id="ndbi_layer" name="14. Sentinel-2 NDBI Built-Up Index" source="C:/clg/9thsem/projects/Spatial/data/raw/sentinel2_indices/ndbi.tif" providerKey="gdal" checked="Qt::Unchecked" expanded="0"/>
+      <layer-tree-layer id="ndvi_layer" name="15. Sentinel-2 NDVI Vegetation Index" source="C:/clg/9thsem/projects/Spatial/data/raw/sentinel2_indices/ndvi.tif" providerKey="gdal" checked="Qt::Unchecked" expanded="0"/>
+    </layer-tree-group>
+
+  </layer-tree-group>
+
+  <snapping-config maxScale="0" minScale="0" enabled="0" scaleDependencyMode="0" mode="2" intersectionSnapping="0">
+    <individual-layer-settings/>
+  </snapping-config>
+
+  <projectlayers>
+
+    <!-- ─── 01. OPTIMIZED ROUTES ─── -->
+    <maplayer type="vector" geometry="Line" wktType="LineString"
+      refreshOnNotifyEnabled="0" autoRefreshTime="0"
+      hasScaleBasedVisibilityFlag="0" maxScale="0" minScale="1e+08">
+      <id>optimized_routes_layer</id>
+      <datasource>C:/clg/9thsem/projects/Spatial/data/processed/optimized_routes.gpkg|layername=optimized_routes</datasource>
+      <layername>01. VRP Optimized Collection Routes</layername>
+      <srs>
+        <spatialrefsys nativeFormat="Wkt">
+          <wkt>GEOGCRS["WGS 84",DATUM["World Geodetic System 1984",ELLIPSOID["WGS 84",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433],ID["EPSG",4326]]</wkt>
+          <proj4>+proj=longlat +datum=WGS84 +no_defs</proj4>
+          <srsid>3452</srsid><srid>4326</srid>
+          <authid>EPSG:4326</authid>
+          <description>WGS 84</description>
+          <projectionacronym>longlat</projectionacronym>
+          <ellipsoidacronym>EPSG:7030</ellipsoidacronym>
+          <geographicflag>true</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+      <renderer-v2 type="categorizedSymbol" attr="truck_id" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+        <categories>
+          <category value="TRUCK_01" symbol="0" label="Truck 01 (Route A)" render="true"/>
+          <category value="TRUCK_02" symbol="1" label="Truck 02 (Route B)" render="true"/>
+          <category value="TRUCK_03" symbol="2" label="Truck 03 (Route C)" render="true"/>
+          <category value="TRUCK_04" symbol="3" label="Truck 04 (Route D)" render="true"/>
+        </categories>
+        <symbols>
+          <symbol type="line" name="0" alpha="1" clip_to_extent="1">
+            <layer class="SimpleLine" locked="0" pass="0" enabled="1">
+              <Option type="Map">
+                <Option type="QString" name="line_color" value="255,42,109,255"/>
+                <Option type="QString" name="line_width" value="1.8"/>
+                <Option type="QString" name="capstyle" value="round"/>
+                <Option type="QString" name="joinstyle" value="round"/>
+              </Option>
+            </layer>
+          </symbol>
+          <symbol type="line" name="1" alpha="1" clip_to_extent="1">
+            <layer class="SimpleLine" locked="0" pass="0" enabled="1">
+              <Option type="Map">
+                <Option type="QString" name="line_color" value="0,230,118,255"/>
+                <Option type="QString" name="line_width" value="1.8"/>
+                <Option type="QString" name="capstyle" value="round"/>
+                <Option type="QString" name="joinstyle" value="round"/>
+              </Option>
+            </layer>
+          </symbol>
+          <symbol type="line" name="2" alpha="1" clip_to_extent="1">
+            <layer class="SimpleLine" locked="0" pass="0" enabled="1">
+              <Option type="Map">
+                <Option type="QString" name="line_color" value="0,240,255,255"/>
+                <Option type="QString" name="line_width" value="1.8"/>
+                <Option type="QString" name="capstyle" value="round"/>
+                <Option type="QString" name="joinstyle" value="round"/>
+              </Option>
+            </layer>
+          </symbol>
+          <symbol type="line" name="3" alpha="1" clip_to_extent="1">
+            <layer class="SimpleLine" locked="0" pass="0" enabled="1">
+              <Option type="Map">
+                <Option type="QString" name="line_color" value="255,214,0,255"/>
+                <Option type="QString" name="line_width" value="1.8"/>
+                <Option type="QString" name="capstyle" value="round"/>
+                <Option type="QString" name="joinstyle" value="round"/>
+              </Option>
+            </layer>
+          </symbol>
+        </symbols>
+      </renderer-v2>
+    </maplayer>
+
+    <!-- ─── 02. BIN SITES ─── -->
+    <maplayer type="vector" geometry="Point" wktType="Point"
+      refreshOnNotifyEnabled="0" autoRefreshTime="0"
+      hasScaleBasedVisibilityFlag="0" maxScale="0" minScale="1e+08">
+      <id>bin_sites_layer</id>
+      <datasource>C:/clg/9thsem/projects/Spatial/data/processed/bin_sites.gpkg|layername=bin_sites</datasource>
+      <layername>02. Priority Smart Bin Sites (Top 15%)</layername>
+      <srs>
+        <spatialrefsys nativeFormat="Wkt">
+          <wkt>GEOGCRS["WGS 84",DATUM["World Geodetic System 1984",ELLIPSOID["WGS 84",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433],ID["EPSG",4326]]</wkt>
+          <proj4>+proj=longlat +datum=WGS84 +no_defs</proj4>
+          <srsid>3452</srsid><srid>4326</srid>
+          <authid>EPSG:4326</authid>
+          <description>WGS 84</description>
+          <projectionacronym>longlat</projectionacronym>
+          <ellipsoidacronym>EPSG:7030</ellipsoidacronym>
+          <geographicflag>true</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+      <renderer-v2 type="categorizedSymbol" attr="bin_type" forceraster="0" symbollevels="0">
+        <categories>
+          <category value="Smart Sensor Bin" symbol="0" label="Smart Sensor Bin (IoT)" render="true"/>
+          <category value="Standard Collection Point" symbol="1" label="Standard Collection Point" render="true"/>
+        </categories>
+        <symbols>
+          <symbol type="marker" name="0" alpha="0.95" clip_to_extent="1">
+            <layer class="SimpleMarker" locked="0" pass="0" enabled="1">
+              <Option type="Map">
+                <Option type="QString" name="color" value="255,0,128,240"/>
+                <Option type="QString" name="outline_color" value="255,255,255,255"/>
+                <Option type="QString" name="outline_width" value="0.6"/>
+                <Option type="QString" name="size" value="2.6"/>
+                <Option type="QString" name="name" value="diamond"/>
+              </Option>
+            </layer>
+          </symbol>
+          <symbol type="marker" name="1" alpha="0.85" clip_to_extent="1">
+            <layer class="SimpleMarker" locked="0" pass="0" enabled="1">
+              <Option type="Map">
+                <Option type="QString" name="color" value="255,179,0,200"/>
+                <Option type="QString" name="outline_color" value="0,0,0,120"/>
+                <Option type="QString" name="outline_width" value="0.3"/>
+                <Option type="QString" name="size" value="1.5"/>
+                <Option type="QString" name="name" value="circle"/>
+              </Option>
+            </layer>
+          </symbol>
+        </symbols>
+      </renderer-v2>
+    </maplayer>
+
+    <!-- ─── 03. GETIS-ORD Gi* HOTSPOTS ─── -->
+    <maplayer type="vector" geometry="Polygon" wktType="Polygon"
+      refreshOnNotifyEnabled="0" autoRefreshTime="0"
+      hasScaleBasedVisibilityFlag="0" maxScale="0" minScale="1e+08">
+      <id>hotspots_layer</id>
+      <datasource>C:/clg/9thsem/projects/Spatial/data/processed/final_predictions_with_shap.gpkg|layername=final_predictions_with_shap</datasource>
+      <layername>03. Getis-Ord Gi* Waste Hotspots</layername>
+      <srs>
+        <spatialrefsys nativeFormat="Wkt">
+          <wkt>GEOGCRS["WGS 84",DATUM["World Geodetic System 1984",ELLIPSOID["WGS 84",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433],ID["EPSG",4326]]</wkt>
+          <proj4>+proj=longlat +datum=WGS84 +no_defs</proj4>
+          <srsid>3452</srsid><srid>4326</srid>
+          <authid>EPSG:4326</authid>
+          <description>WGS 84</description>
+          <projectionacronym>longlat</projectionacronym>
+          <ellipsoidacronym>EPSG:7030</ellipsoidacronym>
+          <geographicflag>true</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+      <renderer-v2 type="categorizedSymbol" attr="hotspot_class" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+        <categories>
+          <category value="Hotspot 99%" symbol="0" label="Hotspot 99% Confidence (Critical)" render="true"/>
+          <category value="Hotspot 95%" symbol="1" label="Hotspot 95% Confidence (High)" render="true"/>
+          <category value="Hotspot 90%" symbol="2" label="Hotspot 90% Confidence (Moderate)" render="true"/>
+          <category value="Not Significant" symbol="3" label="Not Significant (Neutral)" render="true"/>
+          <category value="Coldspot 90%" symbol="4" label="Coldspot 90% Confidence" render="true"/>
+          <category value="Coldspot 95%" symbol="5" label="Coldspot 95% Confidence" render="true"/>
+          <category value="Coldspot 99%" symbol="6" label="Coldspot 99% Confidence" render="true"/>
+        </categories>
+        <symbols>
+          <!-- Hotspot 99%: Glowing Crimson -->
+          <symbol type="fill" name="0" alpha="0.90" clip_to_extent="1">
+            <layer class="SimpleFill" locked="0" pass="0" enabled="1">
+              <Option type="Map">
+                <Option type="QString" name="color" value="230,57,70,230"/>
+                <Option type="QString" name="outline_color" value="0,0,0,0"/>
+                <Option type="QString" name="outline_width" value="0"/>
+                <Option type="QString" name="outline_style" value="no"/>
+              </Option>
+            </layer>
+          </symbol>
+          <!-- Hotspot 95%: Vivid Orange -->
+          <symbol type="fill" name="1" alpha="0.85" clip_to_extent="1">
+            <layer class="SimpleFill" locked="0" pass="0" enabled="1">
+              <Option type="Map">
+                <Option type="QString" name="color" value="251,133,0,220"/>
+                <Option type="QString" name="outline_color" value="0,0,0,0"/>
+                <Option type="QString" name="outline_width" value="0"/>
+                <Option type="QString" name="outline_style" value="no"/>
+              </Option>
+            </layer>
+          </symbol>
+          <!-- Hotspot 90%: Warm Gold -->
+          <symbol type="fill" name="2" alpha="0.80" clip_to_extent="1">
+            <layer class="SimpleFill" locked="0" pass="0" enabled="1">
+              <Option type="Map">
+                <Option type="QString" name="color" value="255,183,3,210"/>
+                <Option type="QString" name="outline_color" value="0,0,0,0"/>
+                <Option type="QString" name="outline_width" value="0"/>
+                <Option type="QString" name="outline_style" value="no"/>
+              </Option>
+            </layer>
+          </symbol>
+          <!-- Not Significant: 100% Transparent (City & roads show through) -->
+          <symbol type="fill" name="3" alpha="0" clip_to_extent="1">
+            <layer class="SimpleFill" locked="0" pass="0" enabled="1">
+              <Option type="Map">
+                <Option type="QString" name="color" value="0,0,0,0"/>
+                <Option type="QString" name="outline_color" value="0,0,0,0"/>
+                <Option type="QString" name="outline_width" value="0"/>
+                <Option type="QString" name="outline_style" value="no"/>
+              </Option>
+            </layer>
+          </symbol>
+          <!-- Coldspot 90%: Soft Cyan -->
+          <symbol type="fill" name="4" alpha="0.75" clip_to_extent="1">
+            <layer class="SimpleFill" locked="0" pass="0" enabled="1">
+              <Option type="Map">
+                <Option type="QString" name="color" value="72,202,228,190"/>
+                <Option type="QString" name="outline_color" value="0,0,0,0"/>
+                <Option type="QString" name="outline_width" value="0"/>
+                <Option type="QString" name="outline_style" value="no"/>
+              </Option>
+            </layer>
+          </symbol>
+          <!-- Coldspot 95%: Azure Blue -->
+          <symbol type="fill" name="5" alpha="0.80" clip_to_extent="1">
+            <layer class="SimpleFill" locked="0" pass="0" enabled="1">
+              <Option type="Map">
+                <Option type="QString" name="color" value="0,119,182,210"/>
+                <Option type="QString" name="outline_color" value="0,0,0,0"/>
+                <Option type="QString" name="outline_width" value="0"/>
+                <Option type="QString" name="outline_style" value="no"/>
+              </Option>
+            </layer>
+          </symbol>
+          <!-- Coldspot 99%: Deep Royal Navy -->
+          <symbol type="fill" name="6" alpha="0.85" clip_to_extent="1">
+            <layer class="SimpleFill" locked="0" pass="0" enabled="1">
+              <Option type="Map">
+                <Option type="QString" name="color" value="3,4,94,220"/>
+                <Option type="QString" name="outline_color" value="0,0,0,0"/>
+                <Option type="QString" name="outline_width" value="0"/>
+                <Option type="QString" name="outline_style" value="no"/>
+              </Option>
+            </layer>
+          </symbol>
+        </symbols>
+      </renderer-v2>
+    </maplayer>
+
+    <!-- ─── 04. GEO-SHAP DRIVERS ─── -->
+    <maplayer type="vector" geometry="Polygon" wktType="Polygon"
+      refreshOnNotifyEnabled="0" autoRefreshTime="0"
+      hasScaleBasedVisibilityFlag="0" maxScale="0" minScale="1e+08">
+      <id>shap_drivers_layer</id>
+      <datasource>C:/clg/9thsem/projects/Spatial/data/processed/final_predictions_with_shap.gpkg|layername=final_predictions_with_shap</datasource>
+      <layername>04. Geo-SHAP Dominant Feature Drivers</layername>
+      <srs>
+        <spatialrefsys nativeFormat="Wkt">
+          <wkt>GEOGCRS["WGS 84",DATUM["World Geodetic System 1984",ELLIPSOID["WGS 84",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433],ID["EPSG",4326]]</wkt>
+          <proj4>+proj=longlat +datum=WGS84 +no_defs</proj4>
+          <srsid>3452</srsid><srid>4326</srid>
+          <authid>EPSG:4326</authid>
+          <description>WGS 84</description>
+          <projectionacronym>longlat</projectionacronym>
+          <ellipsoidacronym>EPSG:7030</ellipsoidacronym>
+          <geographicflag>true</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+      <renderer-v2 type="categorizedSymbol" attr="primary_driver" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1">
+        <categories>
+          <category value="pop_density"          symbol="0" label="Population Density"     render="true"/>
+          <category value="mean_ndbi"             symbol="1" label="Built-Up Index (NDBI)"  render="true"/>
+          <category value="mean_ndvi"             symbol="2" label="Vegetation (NDVI)"      render="true"/>
+          <category value="mean_lst"              symbol="3" label="Land Surface Temp"      render="true"/>
+          <category value="building_vol_m3"       symbol="4" label="3D Building Volume"     render="true"/>
+          <category value="weighted_poi_density"  symbol="5" label="Commercial POI Density" render="true"/>
+          <category value="transit_centrality"    symbol="6" label="Transit Hub Centrality" render="true"/>
+          <category value="road_density"          symbol="7" label="Road Density"           render="true"/>
+        </categories>
+        <symbols>
+          <symbol type="fill" name="0" alpha="0.80"><layer class="SimpleFill" locked="0" pass="0" enabled="1"><Option type="Map"><Option type="QString" name="color" value="231,76,60,200"/><Option type="QString" name="outline_color" value="0,0,0,0"/><Option type="QString" name="outline_style" value="no"/></Option></layer></symbol>
+          <symbol type="fill" name="1" alpha="0.80"><layer class="SimpleFill" locked="0" pass="0" enabled="1"><Option type="Map"><Option type="QString" name="color" value="142,68,173,200"/><Option type="QString" name="outline_color" value="0,0,0,0"/><Option type="QString" name="outline_style" value="no"/></Option></layer></symbol>
+          <symbol type="fill" name="2" alpha="0.80"><layer class="SimpleFill" locked="0" pass="0" enabled="1"><Option type="Map"><Option type="QString" name="color" value="39,174,96,200"/><Option type="QString" name="outline_color" value="0,0,0,0"/><Option type="QString" name="outline_style" value="no"/></Option></layer></symbol>
+          <symbol type="fill" name="3" alpha="0.80"><layer class="SimpleFill" locked="0" pass="0" enabled="1"><Option type="Map"><Option type="QString" name="color" value="230,126,34,200"/><Option type="QString" name="outline_color" value="0,0,0,0"/><Option type="QString" name="outline_style" value="no"/></Option></layer></symbol>
+          <symbol type="fill" name="4" alpha="0.80"><layer class="SimpleFill" locked="0" pass="0" enabled="1"><Option type="Map"><Option type="QString" name="color" value="41,128,185,200"/><Option type="QString" name="outline_color" value="0,0,0,0"/><Option type="QString" name="outline_style" value="no"/></Option></layer></symbol>
+          <symbol type="fill" name="5" alpha="0.80"><layer class="SimpleFill" locked="0" pass="0" enabled="1"><Option type="Map"><Option type="QString" name="color" value="243,156,18,200"/><Option type="QString" name="outline_color" value="0,0,0,0"/><Option type="QString" name="outline_style" value="no"/></Option></layer></symbol>
+          <symbol type="fill" name="6" alpha="0.80"><layer class="SimpleFill" locked="0" pass="0" enabled="1"><Option type="Map"><Option type="QString" name="color" value="22,160,133,200"/><Option type="QString" name="outline_color" value="0,0,0,0"/><Option type="QString" name="outline_style" value="no"/></Option></layer></symbol>
+          <symbol type="fill" name="7" alpha="0.80"><layer class="SimpleFill" locked="0" pass="0" enabled="1"><Option type="Map"><Option type="QString" name="color" value="127,140,141,200"/><Option type="QString" name="outline_color" value="0,0,0,0"/><Option type="QString" name="outline_style" value="no"/></Option></layer></symbol>
+        </symbols>
+      </renderer-v2>
+    </maplayer>
+
+    <!-- ─── 05. PREDICTED WASTE ─── -->
+    <maplayer type="vector" geometry="Polygon" wktType="Polygon"
+      refreshOnNotifyEnabled="0" autoRefreshTime="0"
+      hasScaleBasedVisibilityFlag="0" maxScale="0" minScale="1e+08">
+      <id>pred_waste_layer</id>
+      <datasource>C:/clg/9thsem/projects/Spatial/data/processed/final_predictions_with_shap.gpkg|layername=final_predictions_with_shap</datasource>
+      <layername>05. Predicted Total Waste (kg/day)</layername>
+      <srs>
+        <spatialrefsys nativeFormat="Wkt">
+          <wkt>GEOGCRS["WGS 84",DATUM["World Geodetic System 1984",ELLIPSOID["WGS 84",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433],ID["EPSG",4326]]</wkt>
+          <proj4>+proj=longlat +datum=WGS84 +no_defs</proj4>
+          <srsid>3452</srsid><srid>4326</srid>
+          <authid>EPSG:4326</authid>
+          <description>WGS 84</description>
+          <projectionacronym>longlat</projectionacronym>
+          <ellipsoidacronym>EPSG:7030</ellipsoidacronym>
+          <geographicflag>true</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+      <renderer-v2 type="graduatedSymbol" attr="pred_waste_kg_day" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1" graduatedMethod="GraduatedColor">
+        <ranges>
+          <range lower="0" upper="500"  symbol="0" label="0 – 500 kg/day"   render="true"/>
+          <range lower="500" upper="1000" symbol="1" label="500 – 1,000 kg/day" render="true"/>
+          <range lower="1000" upper="2000" symbol="2" label="1,000 – 2,000 kg/day" render="true"/>
+          <range lower="2000" upper="3500" symbol="3" label="2,000 – 3,500 kg/day" render="true"/>
+          <range lower="3500" upper="999999" symbol="4" label="> 3,500 kg/day" render="true"/>
+        </ranges>
+        <symbols>
+          <symbol type="fill" name="0" alpha="0.75"><layer class="SimpleFill" locked="0" pass="0" enabled="1"><Option type="Map"><Option type="QString" name="color" value="240,249,232,180"/><Option type="QString" name="outline_color" value="0,0,0,0"/><Option type="QString" name="outline_style" value="no"/></Option></layer></symbol>
+          <symbol type="fill" name="1" alpha="0.75"><layer class="SimpleFill" locked="0" pass="0" enabled="1"><Option type="Map"><Option type="QString" name="color" value="186,228,188,190"/><Option type="QString" name="outline_color" value="0,0,0,0"/><Option type="QString" name="outline_style" value="no"/></Option></layer></symbol>
+          <symbol type="fill" name="2" alpha="0.78"><layer class="SimpleFill" locked="0" pass="0" enabled="1"><Option type="Map"><Option type="QString" name="color" value="123,204,196,200"/><Option type="QString" name="outline_color" value="0,0,0,0"/><Option type="QString" name="outline_style" value="no"/></Option></layer></symbol>
+          <symbol type="fill" name="3" alpha="0.82"><layer class="SimpleFill" locked="0" pass="0" enabled="1"><Option type="Map"><Option type="QString" name="color" value="67,162,202,210"/><Option type="QString" name="outline_color" value="0,0,0,0"/><Option type="QString" name="outline_style" value="no"/></Option></layer></symbol>
+          <symbol type="fill" name="4" alpha="0.88"><layer class="SimpleFill" locked="0" pass="0" enabled="1"><Option type="Map"><Option type="QString" name="color" value="8,104,172,230"/><Option type="QString" name="outline_color" value="0,0,0,0"/><Option type="QString" name="outline_style" value="no"/></Option></layer></symbol>
+        </symbols>
+      </renderer-v2>
+    </maplayer>
+
+    <!-- ─── 06. CARBON IMPACT ─── -->
+    <maplayer type="vector" geometry="Polygon" wktType="Polygon"
+      refreshOnNotifyEnabled="0" autoRefreshTime="0"
+      hasScaleBasedVisibilityFlag="0" maxScale="0" minScale="1e+08">
+      <id>carbon_impact_layer</id>
+      <datasource>C:/clg/9thsem/projects/Spatial/data/processed/carbon_impact.gpkg|layername=carbon_impact</datasource>
+      <layername>06. IPCC GHG — Methane &amp; CO2e (kg/yr)</layername>
+      <srs>
+        <spatialrefsys nativeFormat="Wkt">
+          <wkt>GEOGCRS["WGS 84",DATUM["World Geodetic System 1984",ELLIPSOID["WGS 84",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433],ID["EPSG",4326]]</wkt>
+          <proj4>+proj=longlat +datum=WGS84 +no_defs</proj4>
+          <srsid>3452</srsid><srid>4326</srid>
+          <authid>EPSG:4326</authid>
+          <description>WGS 84</description>
+          <projectionacronym>longlat</projectionacronym>
+          <ellipsoidacronym>EPSG:7030</ellipsoidacronym>
+          <geographicflag>true</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+      <renderer-v2 type="graduatedSymbol" attr="co2e_kg_yr" forceraster="0" symbollevels="0" enableorderby="0" referencescale="-1" graduatedMethod="GraduatedColor">
+        <ranges>
+          <range lower="0" upper="5000"   symbol="0" label="0 – 5,000 kg CO2e/yr"   render="true"/>
+          <range lower="5000" upper="15000"  symbol="1" label="5k – 15,000 kg CO2e/yr"  render="true"/>
+          <range lower="15000" upper="30000" symbol="2" label="15k – 30,000 kg CO2e/yr" render="true"/>
+          <range lower="30000" upper="60000" symbol="3" label="30k – 60,000 kg CO2e/yr" render="true"/>
+          <range lower="60000" upper="9999999" symbol="4" label="> 60,000 kg CO2e/yr" render="true"/>
+        </ranges>
+        <symbols>
+          <symbol type="fill" name="0" alpha="0.75"><layer class="SimpleFill" locked="0" pass="0" enabled="1"><Option type="Map"><Option type="QString" name="color" value="254,240,217,180"/><Option type="QString" name="outline_color" value="0,0,0,0"/><Option type="QString" name="outline_style" value="no"/></Option></layer></symbol>
+          <symbol type="fill" name="1" alpha="0.78"><layer class="SimpleFill" locked="0" pass="0" enabled="1"><Option type="Map"><Option type="QString" name="color" value="253,204,138,190"/><Option type="QString" name="outline_color" value="0,0,0,0"/><Option type="QString" name="outline_style" value="no"/></Option></layer></symbol>
+          <symbol type="fill" name="2" alpha="0.82"><layer class="SimpleFill" locked="0" pass="0" enabled="1"><Option type="Map"><Option type="QString" name="color" value="252,141,89,200"/><Option type="QString" name="outline_color" value="0,0,0,0"/><Option type="QString" name="outline_style" value="no"/></Option></layer></symbol>
+          <symbol type="fill" name="3" alpha="0.85"><layer class="SimpleFill" locked="0" pass="0" enabled="1"><Option type="Map"><Option type="QString" name="color" value="227,74,51,220"/><Option type="QString" name="outline_color" value="0,0,0,0"/><Option type="QString" name="outline_style" value="no"/></Option></layer></symbol>
+          <symbol type="fill" name="4" alpha="0.90"><layer class="SimpleFill" locked="0" pass="0" enabled="1"><Option type="Map"><Option type="QString" name="color" value="179,0,0,240"/><Option type="QString" name="outline_color" value="0,0,0,0"/><Option type="QString" name="outline_style" value="no"/></Option></layer></symbol>
+        </symbols>
+      </renderer-v2>
+    </maplayer>
+
+    <!-- ─── 07. BBMP WARD BOUNDARIES ─── -->
+    <maplayer type="vector" geometry="Polygon" wktType="MultiPolygon"
+      refreshOnNotifyEnabled="0" autoRefreshTime="0"
+      hasScaleBasedVisibilityFlag="0" maxScale="0" minScale="1e+08">
+      <id>wards_layer</id>
+      <datasource>C:/clg/9thsem/projects/Spatial/data/raw/bengaluru_wards.geojson</datasource>
+      <layername>07. Bengaluru BBMP Ward Boundaries (243 Wards)</layername>
+      <srs>
+        <spatialrefsys nativeFormat="Wkt">
+          <wkt>GEOGCRS["WGS 84",DATUM["World Geodetic System 1984",ELLIPSOID["WGS 84",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433],ID["EPSG",4326]]</wkt>
+          <proj4>+proj=longlat +datum=WGS84 +no_defs</proj4>
+          <srsid>3452</srsid><srid>4326</srid>
+          <authid>EPSG:4326</authid>
+          <description>WGS 84</description>
+          <projectionacronym>longlat</projectionacronym>
+          <ellipsoidacronym>EPSG:7030</ellipsoidacronym>
+          <geographicflag>true</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+      <renderer-v2 type="singleSymbol" forceraster="0" symbollevels="0">
+        <symbols>
+          <symbol type="fill" name="0" alpha="1" clip_to_extent="1">
+            <layer class="SimpleFill" locked="0" pass="0" enabled="1">
+              <Option type="Map">
+                <Option type="QString" name="color" value="0,0,0,0"/>
+                <Option type="QString" name="outline_color" value="100,116,139,220"/>
+                <Option type="QString" name="outline_width" value="0.45"/>
+                <Option type="QString" name="outline_style" value="solid"/>
+              </Option>
+            </layer>
+          </symbol>
+        </symbols>
+      </renderer-v2>
+    </maplayer>
+
+    <!-- ─── 08. KARNATAKA DISTRICT BOUNDARIES ─── -->
+    <maplayer type="vector" geometry="Polygon" wktType="MultiPolygon"
+      refreshOnNotifyEnabled="0" autoRefreshTime="0"
+      hasScaleBasedVisibilityFlag="0" maxScale="0" minScale="1e+08">
+      <id>karnataka_layer</id>
+      <datasource>C:/clg/9thsem/projects/Spatial/data/raw/karnataka_districts.geojson</datasource>
+      <layername>08. Karnataka State District Boundaries</layername>
+      <srs>
+        <spatialrefsys nativeFormat="Wkt">
+          <wkt>GEOGCRS["WGS 84",DATUM["World Geodetic System 1984",ELLIPSOID["WGS 84",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433],ID["EPSG",4326]]</wkt>
+          <proj4>+proj=longlat +datum=WGS84 +no_defs</proj4>
+          <srsid>3452</srsid><srid>4326</srid>
+          <authid>EPSG:4326</authid>
+          <description>WGS 84</description>
+          <projectionacronym>longlat</projectionacronym>
+          <ellipsoidacronym>EPSG:7030</ellipsoidacronym>
+          <geographicflag>true</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+      <renderer-v2 type="singleSymbol" forceraster="0" symbollevels="0">
+        <symbols>
+          <symbol type="fill" name="0" alpha="1" clip_to_extent="1">
+            <layer class="SimpleFill" locked="0" pass="0" enabled="1">
+              <Option type="Map">
+                <Option type="QString" name="color" value="0,0,0,0"/>
+                <Option type="QString" name="outline_color" value="71,85,105,180"/>
+                <Option type="QString" name="outline_width" value="0.3"/>
+                <Option type="QString" name="outline_style" value="dash"/>
+              </Option>
+            </layer>
+          </symbol>
+        </symbols>
+      </renderer-v2>
+    </maplayer>
+
+    <!-- ─── 09. HEX GRID ─── -->
+    <maplayer type="vector" geometry="Polygon" wktType="Polygon"
+      refreshOnNotifyEnabled="0" autoRefreshTime="0"
+      hasScaleBasedVisibilityFlag="0" maxScale="0" minScale="1e+08">
+      <id>hex_grid_layer</id>
+      <datasource>C:/clg/9thsem/projects/Spatial/data/processed/hex_grid_250m.gpkg|layername=hex_grid_250m</datasource>
+      <layername>09. Hexagonal Analysis Grid (250m)</layername>
+      <srs>
+        <spatialrefsys nativeFormat="Wkt">
+          <wkt>GEOGCRS["WGS 84",DATUM["World Geodetic System 1984",ELLIPSOID["WGS 84",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433],ID["EPSG",4326]]</wkt>
+          <proj4>+proj=longlat +datum=WGS84 +no_defs</proj4>
+          <srsid>3452</srsid><srid>4326</srid>
+          <authid>EPSG:4326</authid>
+          <description>WGS 84</description>
+          <projectionacronym>longlat</projectionacronym>
+          <ellipsoidacronym>EPSG:7030</ellipsoidacronym>
+          <geographicflag>true</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+      <renderer-v2 type="singleSymbol" forceraster="0" symbollevels="0">
+        <symbols>
+          <symbol type="fill" name="0" alpha="1" clip_to_extent="1">
+            <layer class="SimpleFill" locked="0" pass="0" enabled="1">
+              <Option type="Map">
+                <Option type="QString" name="color" value="0,0,0,0"/>
+                <Option type="QString" name="outline_color" value="74,85,104,110"/>
+                <Option type="QString" name="outline_width" value="0.12"/>
+              </Option>
+            </layer>
+          </symbol>
+        </symbols>
+      </renderer-v2>
+    </maplayer>
+
+    <!-- ─── 10. ESRI DARK CANVAS BASEMAP ─── -->
+    <maplayer type="raster" autoRefreshTime="0" hasScaleBasedVisibilityFlag="0" maxScale="0" minScale="1e+08">
+      <id>esri_dark_layer</id>
+      <datasource>type=xyz&amp;url=https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}&amp;zmax=16&amp;zmin=0</datasource>
+      <layername>10. Esri Dark Canvas Basemap (Recommended)</layername>
+      <provider>wms</provider>
+    </maplayer>
+
+    <!-- ─── 11. ESRI SATELLITE BASEMAP ─── -->
+    <maplayer type="raster" autoRefreshTime="0" hasScaleBasedVisibilityFlag="0" maxScale="0" minScale="1e+08">
+      <id>esri_sat_layer</id>
+      <datasource>type=xyz&amp;url=https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}&amp;zmax=19&amp;zmin=0</datasource>
+      <layername>11. Esri World Imagery Satellite (Optional)</layername>
+      <provider>wms</provider>
+    </maplayer>
+
+    <!-- ─── 12. OSM STANDARD BASEMAP ─── -->
+    <maplayer type="raster" autoRefreshTime="0" hasScaleBasedVisibilityFlag="0" maxScale="0" minScale="1e+08">
+      <id>osm_tiles_layer</id>
+      <datasource>type=xyz&amp;url=https://tile.openstreetmap.org/{z}/{x}/{y}.png&amp;zmax=19&amp;zmin=0</datasource>
+      <layername>12. OpenStreetMap Standard Basemap</layername>
+      <provider>wms</provider>
+    </maplayer>
+
+    <!-- ─── 13. LST RASTER ─── -->
+    <maplayer type="raster" autoRefreshTime="0" hasScaleBasedVisibilityFlag="0" maxScale="0" minScale="1e+08">
+      <id>lst_layer</id>
+      <datasource>C:/clg/9thsem/projects/Spatial/data/raw/landsat_lst/lst_celsius.tif</datasource>
+      <layername>13. Landsat-9 Land Surface Temperature (°C)</layername>
+      <provider>gdal</provider>
+    </maplayer>
+
+    <!-- ─── 14. NDBI RASTER ─── -->
+    <maplayer type="raster" autoRefreshTime="0" hasScaleBasedVisibilityFlag="0" maxScale="0" minScale="1e+08">
+      <id>ndbi_layer</id>
+      <datasource>C:/clg/9thsem/projects/Spatial/data/raw/sentinel2_indices/ndbi.tif</datasource>
+      <layername>14. Sentinel-2 NDBI Built-Up Index</layername>
+      <provider>gdal</provider>
+    </maplayer>
+
+    <!-- ─── 15. NDVI RASTER ─── -->
+    <maplayer type="raster" autoRefreshTime="0" hasScaleBasedVisibilityFlag="0" maxScale="0" minScale="1e+08">
+      <id>ndvi_layer</id>
+      <datasource>C:/clg/9thsem/projects/Spatial/data/raw/sentinel2_indices/ndvi.tif</datasource>
+      <layername>15. Sentinel-2 NDVI Vegetation Index</layername>
+      <provider>gdal</provider>
+    </maplayer>
+
+  </projectlayers>
+</qgis>
